@@ -1,0 +1,271 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> assignment
+Rule 2     assignment -> ID EQUAL table
+Rule 3     table -> LBRACE fields RBRACE
+Rule 4     table -> LBRACE RBRACE
+Rule 5     fields -> fields COMMA field
+Rule 6     fields -> field
+Rule 7     field -> ID EQUAL value
+Rule 8     field -> LBRACKET value RBRACKET EQUAL value
+Rule 9     value -> NUMBER
+Rule 10    value -> ID
+Rule 11    value -> table
+
+Terminals, with rules where they appear
+
+COMMA                : 5
+EQUAL                : 2 7 8
+ID                   : 2 7 10
+LBRACE               : 3 4
+LBRACKET             : 8
+NUMBER               : 9
+RBRACE               : 3 4
+RBRACKET             : 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 1
+field                : 5 6
+fields               : 3 5
+statement            : 0
+table                : 2 11
+value                : 7 8 8
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . assignment
+    (2) assignment -> . ID EQUAL table
+
+    ID              shift and go to state 3
+
+    statement                      shift and go to state 1
+    assignment                     shift and go to state 2
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> assignment .
+
+    $end            reduce using rule 1 (statement -> assignment .)
+
+
+state 3
+
+    (2) assignment -> ID . EQUAL table
+
+    EQUAL           shift and go to state 4
+
+
+state 4
+
+    (2) assignment -> ID EQUAL . table
+    (3) table -> . LBRACE fields RBRACE
+    (4) table -> . LBRACE RBRACE
+
+    LBRACE          shift and go to state 6
+
+    table                          shift and go to state 5
+
+state 5
+
+    (2) assignment -> ID EQUAL table .
+
+    $end            reduce using rule 2 (assignment -> ID EQUAL table .)
+
+
+state 6
+
+    (3) table -> LBRACE . fields RBRACE
+    (4) table -> LBRACE . RBRACE
+    (5) fields -> . fields COMMA field
+    (6) fields -> . field
+    (7) field -> . ID EQUAL value
+    (8) field -> . LBRACKET value RBRACKET EQUAL value
+
+    RBRACE          shift and go to state 8
+    ID              shift and go to state 10
+    LBRACKET        shift and go to state 11
+
+    fields                         shift and go to state 7
+    field                          shift and go to state 9
+
+state 7
+
+    (3) table -> LBRACE fields . RBRACE
+    (5) fields -> fields . COMMA field
+
+    RBRACE          shift and go to state 12
+    COMMA           shift and go to state 13
+
+
+state 8
+
+    (4) table -> LBRACE RBRACE .
+
+    $end            reduce using rule 4 (table -> LBRACE RBRACE .)
+    RBRACKET        reduce using rule 4 (table -> LBRACE RBRACE .)
+    RBRACE          reduce using rule 4 (table -> LBRACE RBRACE .)
+    COMMA           reduce using rule 4 (table -> LBRACE RBRACE .)
+
+
+state 9
+
+    (6) fields -> field .
+
+    RBRACE          reduce using rule 6 (fields -> field .)
+    COMMA           reduce using rule 6 (fields -> field .)
+
+
+state 10
+
+    (7) field -> ID . EQUAL value
+
+    EQUAL           shift and go to state 14
+
+
+state 11
+
+    (8) field -> LBRACKET . value RBRACKET EQUAL value
+    (9) value -> . NUMBER
+    (10) value -> . ID
+    (11) value -> . table
+    (3) table -> . LBRACE fields RBRACE
+    (4) table -> . LBRACE RBRACE
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+    LBRACE          shift and go to state 6
+
+    value                          shift and go to state 15
+    table                          shift and go to state 18
+
+state 12
+
+    (3) table -> LBRACE fields RBRACE .
+
+    $end            reduce using rule 3 (table -> LBRACE fields RBRACE .)
+    RBRACKET        reduce using rule 3 (table -> LBRACE fields RBRACE .)
+    RBRACE          reduce using rule 3 (table -> LBRACE fields RBRACE .)
+    COMMA           reduce using rule 3 (table -> LBRACE fields RBRACE .)
+
+
+state 13
+
+    (5) fields -> fields COMMA . field
+    (7) field -> . ID EQUAL value
+    (8) field -> . LBRACKET value RBRACKET EQUAL value
+
+    ID              shift and go to state 10
+    LBRACKET        shift and go to state 11
+
+    field                          shift and go to state 19
+
+state 14
+
+    (7) field -> ID EQUAL . value
+    (9) value -> . NUMBER
+    (10) value -> . ID
+    (11) value -> . table
+    (3) table -> . LBRACE fields RBRACE
+    (4) table -> . LBRACE RBRACE
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+    LBRACE          shift and go to state 6
+
+    value                          shift and go to state 20
+    table                          shift and go to state 18
+
+state 15
+
+    (8) field -> LBRACKET value . RBRACKET EQUAL value
+
+    RBRACKET        shift and go to state 21
+
+
+state 16
+
+    (9) value -> NUMBER .
+
+    RBRACKET        reduce using rule 9 (value -> NUMBER .)
+    RBRACE          reduce using rule 9 (value -> NUMBER .)
+    COMMA           reduce using rule 9 (value -> NUMBER .)
+
+
+state 17
+
+    (10) value -> ID .
+
+    RBRACKET        reduce using rule 10 (value -> ID .)
+    RBRACE          reduce using rule 10 (value -> ID .)
+    COMMA           reduce using rule 10 (value -> ID .)
+
+
+state 18
+
+    (11) value -> table .
+
+    RBRACKET        reduce using rule 11 (value -> table .)
+    RBRACE          reduce using rule 11 (value -> table .)
+    COMMA           reduce using rule 11 (value -> table .)
+
+
+state 19
+
+    (5) fields -> fields COMMA field .
+
+    RBRACE          reduce using rule 5 (fields -> fields COMMA field .)
+    COMMA           reduce using rule 5 (fields -> fields COMMA field .)
+
+
+state 20
+
+    (7) field -> ID EQUAL value .
+
+    RBRACE          reduce using rule 7 (field -> ID EQUAL value .)
+    COMMA           reduce using rule 7 (field -> ID EQUAL value .)
+
+
+state 21
+
+    (8) field -> LBRACKET value RBRACKET . EQUAL value
+
+    EQUAL           shift and go to state 22
+
+
+state 22
+
+    (8) field -> LBRACKET value RBRACKET EQUAL . value
+    (9) value -> . NUMBER
+    (10) value -> . ID
+    (11) value -> . table
+    (3) table -> . LBRACE fields RBRACE
+    (4) table -> . LBRACE RBRACE
+
+    NUMBER          shift and go to state 16
+    ID              shift and go to state 17
+    LBRACE          shift and go to state 6
+
+    value                          shift and go to state 23
+    table                          shift and go to state 18
+
+state 23
+
+    (8) field -> LBRACKET value RBRACKET EQUAL value .
+
+    RBRACE          reduce using rule 8 (field -> LBRACKET value RBRACKET EQUAL value .)
+    COMMA           reduce using rule 8 (field -> LBRACKET value RBRACKET EQUAL value .)
+
